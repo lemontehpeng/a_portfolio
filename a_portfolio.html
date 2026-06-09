@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Alicia Wong — Photographer & Video Editor</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&family=Inter:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --white: #ffffff;
+      --off-white: #f8f7f5;
+      --light: #eeece8;
+      --mid: #c4c0b8;
+      --dark: #2a2a28;
+      --accent: #7a6a56;
+      --body: 'Inter', sans-serif;
+      --display: 'Cormorant Garamond', serif;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--body);
+      background: var(--white);
+      color: var(--dark);
+      font-weight: 300;
+      line-height: 1.7;
+      font-size: 15px;
+    }
+
+    /* NAV */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.4rem 5%;
+      background: rgba(255,255,255,0.92);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--light);
+    }
+
+    .nav-logo {
+      font-family: var(--display);
+      font-size: 1.2rem;
+      font-weight: 300;
+      letter-spacing: 0.08em;
+      color: var(--dark);
+      text-decoration: none;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2.5rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: var(--accent);
+      font-size: 0.75rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover { color: var(--dark); }
+
+    /* HERO */
+    #hero {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: center;
+      padding: 0 5%;
+      padding-top: 80px;
+      gap: 4rem;
+    }
+
+    .hero-text { max-width: 520px; }
+
+    .hero-eyebrow {
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 1.5rem;
+    }
+
+    .hero-name {
+      font-family: var(--display);
+      font-size: clamp(3rem, 6vw, 5.5rem);
+      font-weight: 300;
+      line-height: 1.05;
+      letter-spacing: -0.01em;
+      margin-bottom: 1.5rem;
+    }
+
+    .hero-name em {
+      font-style: italic;
+      color: var(--accent);
+    }
+
+    .hero-bio {
+      color: #5a5a58;
+      max-width: 400px;
+      font-size: 0.95rem;
+      margin-bottom: 2.5rem;
+      line-height: 1.8;
+    }
+
+    .hero-cta {
+      display: inline-block;
+      padding: 0.8rem 2rem;
+      border: 1px solid var(--dark);
+      color: var(--dark);
+      text-decoration: none;
+      font-size: 0.72rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      transition: background 0.25s, color 0.25s;
+    }
+
+    .hero-cta:hover { background: var(--dark); color: var(--white); }
+
+    .hero-image {
+      aspect-ratio: 3/4;
+      background: var(--light);
+      overflow: hidden;
+      position: relative;
+    }
+
+    .hero-image img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .hero-image .placeholder-label {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: var(--mid);
+      font-size: 0.75rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      gap: 0.5rem;
+    }
+
+    .placeholder-icon { font-size: 2rem; opacity: 0.4; }
+
+    /* ABOUT */
+    #about {
+      background: var(--off-white);
+      padding: 8rem 5%;
+      display: grid;
+      grid-template-columns: 1fr 1.6fr;
+      gap: 6rem;
+      align-items: start;
+    }
+
+    .section-label {
+      font-size: 0.68rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 1rem;
+    }
+
+    .section-title {
+      font-family: var(--display);
+      font-size: clamp(2rem, 4vw, 3.2rem);
+      font-weight: 300;
+      line-height: 1.15;
+    }
+
+    .about-right p {
+      color: #5a5a58;
+      font-size: 0.95rem;
+      margin-bottom: 1.2rem;
+    }
+
+    .skills-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+      margin-top: 2.5rem;
+    }
+
+    .skill-item {
+      border-top: 1px solid var(--mid);
+      padding-top: 0.8rem;
+    }
+
+    .skill-name {
+      font-size: 0.8rem;
+      font-weight: 500;
+      letter-spacing: 0.05em;
+      margin-bottom: 0.3rem;
+    }
+
+    .skill-detail {
+      font-size: 0.78rem;
+      color: #7a7a78;
+      line-height: 1.6;
+    }
+
+    /* WORK */
+    #work {
+      padding: 8rem 5%;
+    }
+
+    .work-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-bottom: 4rem;
+    }
+
+    .work-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+    }
+
+    .work-item {
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
+    }
+
+    .work-item:first-child {
+      grid-column: span 2;
+    }
+
+    .work-thumb {
+      aspect-ratio: 4/3;
+      background: var(--light);
+      overflow: hidden;
+      position: relative;
+    }
+
+    .work-item:first-child .work-thumb {
+      aspect-ratio: 16/9;
+    }
+
+    .work-thumb img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.5s ease;
+    }
+
+    .work-item:hover .work-thumb img { transform: scale(1.04); }
+
+    .work-thumb .placeholder-label {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: var(--mid);
+      font-size: 0.75rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      gap: 0.5rem;
+    }
+
+    .work-caption {
+      padding: 1rem 0 0.5rem;
+    }
+
+    .work-caption-title {
+      font-size: 0.88rem;
+      font-weight: 500;
+      letter-spacing: 0.02em;
+    }
+
+    .work-caption-type {
+      font-size: 0.72rem;
+      color: var(--accent);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-top: 0.2rem;
+    }
+
+    /* EXPERIENCE */
+    #experience {
+      background: var(--off-white);
+      padding: 8rem 5%;
+      display: grid;
+      grid-template-columns: 1fr 1.6fr;
+      gap: 6rem;
+    }
+
+    .exp-list { display: flex; flex-direction: column; gap: 3rem; }
+
+    .exp-item { border-top: 1px solid var(--mid); padding-top: 1.5rem; }
+
+    .exp-date {
+      font-size: 0.7rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 0.5rem;
+    }
+
+    .exp-role {
+      font-family: var(--display);
+      font-size: 1.4rem;
+      font-weight: 300;
+      line-height: 1.2;
+      margin-bottom: 0.3rem;
+    }
+
+    .exp-company {
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: #5a5a58;
+      margin-bottom: 0.8rem;
+    }
+
+    .exp-desc {
+      font-size: 0.85rem;
+      color: #6a6a68;
+      line-height: 1.7;
+    }
+
+    /* CONTACT */
+    #contact {
+      padding: 8rem 5%;
+      text-align: center;
+      max-width: 700px;
+      margin: 0 auto;
+    }
+
+    #contact .section-label { justify-content: center; display: block; margin-bottom: 1rem; }
+
+    .contact-title {
+      font-family: var(--display);
+      font-size: clamp(2.5rem, 5vw, 4.5rem);
+      font-weight: 300;
+      line-height: 1.1;
+      margin-bottom: 1.5rem;
+    }
+
+    .contact-title em { font-style: italic; color: var(--accent); }
+
+    .contact-sub {
+      color: #6a6a68;
+      font-size: 0.95rem;
+      margin-bottom: 3rem;
+    }
+
+    .contact-links {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      flex-wrap: wrap;
+    }
+
+    .contact-link {
+      text-decoration: none;
+      color: var(--dark);
+      font-size: 0.75rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      border-bottom: 1px solid var(--mid);
+      padding-bottom: 0.2rem;
+      transition: border-color 0.2s, color 0.2s;
+    }
+
+    .contact-link:hover { border-color: var(--dark); color: var(--accent); }
+
+    /* FOOTER */
+    footer {
+      border-top: 1px solid var(--light);
+      padding: 2rem 5%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.72rem;
+      color: var(--mid);
+      letter-spacing: 0.08em;
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 768px) {
+      #hero { grid-template-columns: 1fr; padding-top: 100px; gap: 2rem; }
+      .hero-image { max-height: 60vw; aspect-ratio: 4/3; }
+      #about, #experience { grid-template-columns: 1fr; gap: 3rem; }
+      .work-grid { grid-template-columns: 1fr; }
+      .work-item:first-child { grid-column: span 1; }
+      .skills-grid { grid-template-columns: 1fr; }
+      .nav-links { display: none; }
+    }
+
+    /* FADE IN */
+    .fade-in {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .fade-in.visible { opacity: 1; transform: translateY(0); }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a class="nav-logo" href="#hero">Alicia Wong</a>
+    <ul class="nav-links">
+      <li><a href="#work">Work</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#experience">Experience</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section id="hero">
+    <div class="hero-text fade-in">
+      <p class="hero-eyebrow">Photographer · Video Editor · Content Creator</p>
+      <h1 class="hero-name">Alicia<br><em>Wong Ke Thin</em></h1>
+      <p class="hero-bio">
+        Based in Malaysia. Crafting visual stories through the lens — from wedding films to commercial campaigns, with a precision for light, moment, and motion.
+      </p>
+      <a href="#work" class="hero-cta">View Work</a>
+    </div>
+    <div class="hero-image fade-in">
+      <!-- REPLACE src with Alicia's photo: <img src="assets/alicia.jpg" alt="Alicia Wong"> -->
+      <div class="placeholder-label">
+        <span class="placeholder-icon">📷</span>
+        <span>Replace with Alicia's photo</span>
+        <span style="font-size:0.65rem;opacity:0.6;">assets/alicia.jpg</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- WORK -->
+  <section id="work">
+    <div class="work-header fade-in">
+      <div>
+        <p class="section-label">Selected Work</p>
+        <h2 class="section-title">Portfolio</h2>
+      </div>
+    </div>
+
+    <div class="work-grid">
+      <!-- Item 1 — Featured -->
+      <div class="work-item fade-in">
+        <div class="work-thumb">
+          <!-- <img src="assets/work1.jpg" alt="Wedding Film"> -->
+          <div class="placeholder-label">
+            <span class="placeholder-icon">🎬</span>
+            <span>Featured — Wedding Film</span>
+            <span style="font-size:0.65rem;opacity:0.6;">assets/work1.jpg</span>
+          </div>
+        </div>
+        <div class="work-caption">
+          <p class="work-caption-title">Wedding Cinematic Film</p>
+          <p class="work-caption-type">Videography · Color Grading</p>
+        </div>
+      </div>
+
+      <!-- Item 2 -->
+      <div class="work-item fade-in">
+        <div class="work-thumb">
+          <!-- <img src="assets/work2.jpg" alt="Portrait Photography"> -->
+          <div class="placeholder-label">
+            <span class="placeholder-icon">🖼</span>
+            <span>Portrait Photography</span>
+            <span style="font-size:0.65rem;opacity:0.6;">assets/work2.jpg</span>
+          </div>
+        </div>
+        <div class="work-caption">
+          <p class="work-caption-title">Portrait Session</p>
+          <p class="work-caption-type">Photography · Retouching</p>
+        </div>
+      </div>
+
+      <!-- Item 3 -->
+      <div class="work-item fade-in">
+        <div class="work-thumb">
+          <!-- <img src="assets/work3.jpg" alt="Corporate Event"> -->
+          <div class="placeholder-label">
+            <span class="placeholder-icon">🏢</span>
+            <span>Corporate Event</span>
+            <span style="font-size:0.65rem;opacity:0.6;">assets/work3.jpg</span>
+          </div>
+        </div>
+        <div class="work-caption">
+          <p class="work-caption-title">Corporate Event Coverage</p>
+          <p class="work-caption-type">Videography · Editing</p>
+        </div>
+      </div>
+
+      <!-- Item 4 -->
+      <div class="work-item fade-in">
+        <div class="work-thumb">
+          <!-- <img src="assets/work4.jpg" alt="Food Photography"> -->
+          <div class="placeholder-label">
+            <span class="placeholder-icon">🍱</span>
+            <span>Food Photography</span>
+            <span style="font-size:0.65rem;opacity:0.6;">assets/work4.jpg</span>
+          </div>
+        </div>
+        <div class="work-caption">
+          <p class="work-caption-title">Food & Commercial</p>
+          <p class="work-caption-type">Photography · Editing</p>
+        </div>
+      </div>
+
+      <!-- Item 5 -->
+      <div class="work-item fade-in">
+        <div class="work-thumb">
+          <!-- <img src="assets/work5.jpg" alt="Social Media Campaign"> -->
+          <div class="placeholder-label">
+            <span class="placeholder-icon">📱</span>
+            <span>Social Media Content</span>
+            <span style="font-size:0.65rem;opacity:0.6;">assets/work5.jpg</span>
+          </div>
+        </div>
+        <div class="work-caption">
+          <p class="work-caption-title">Social Media Campaign</p>
+          <p class="work-caption-type">Content Creation · Design</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="fade-in">
+      <p class="section-label">About</p>
+      <h2 class="section-title">The eye<br>behind<br>the lens</h2>
+    </div>
+    <div class="about-right fade-in">
+      <p>
+        I'm Alicia Wong, a Communication and Media student at Han Chiang University College of Communication, specialising in Media Production. My work spans wedding films, corporate events, commercial content, and digital campaigns.
+      </p>
+      <p>
+        With experience at Image Farm Production and Vivid Art Production in Penang, I've had the privilege of contributing to productions both big and intimate — from PDC campaigns to heartfelt wedding stories.
+      </p>
+      <p>
+        Fluent in Chinese, English, and Malay. Always curious, always shooting.
+      </p>
+
+      <div class="skills-grid">
+        <div class="skill-item">
+          <p class="skill-name">Camera & Production</p>
+          <p class="skill-detail">DSLR/Mirrorless, Gimbal, Wedding & Event Videography</p>
+        </div>
+        <div class="skill-item">
+          <p class="skill-name">Video Editing</p>
+          <p class="skill-detail">Premiere Pro, DaVinci Resolve, Color Grading, Motion Graphics</p>
+        </div>
+        <div class="skill-item">
+          <p class="skill-name">Photography</p>
+          <p class="skill-detail">Portrait, Event, Food, Property, Lightroom & Photoshop</p>
+        </div>
+        <div class="skill-item">
+          <p class="skill-name">Design & Social</p>
+          <p class="skill-detail">Illustrator, After Effects, Canva, Content Planning</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EXPERIENCE -->
+  <section id="experience">
+    <div class="fade-in">
+      <p class="section-label">Experience</p>
+      <h2 class="section-title">Where<br>I've<br>worked</h2>
+    </div>
+    <div class="exp-list">
+      <div class="exp-item fade-in">
+        <p class="exp-date">Nov 2025 – Mar 2026</p>
+        <h3 class="exp-role">Media Production Intern</h3>
+        <p class="exp-company">Vivid Art Production, Penang</p>
+        <p class="exp-desc">
+          Worked as wedding assistant and second cameraman. Edited 10+ wedding, event, and promotional videos. Produced food photography, social media campaigns, posters, and property photography for Airbnb clients.
+        </p>
+      </div>
+
+      <div class="exp-item fade-in">
+        <p class="exp-date">Jan 2024 – Mar 2024</p>
+        <h3 class="exp-role">Media Production Intern</h3>
+        <p class="exp-company">Image Farm Production Sdn Bhd, Penang</p>
+        <p class="exp-desc">
+          Supported corporate, commercial, and event productions. Operated professional lighting, monitors, sliders, and gimbals. Contributed to PDC Chinese New Year Campaign, Georgetown Festival, and Gano Excel Event.
+        </p>
+      </div>
+
+      <div class="exp-item fade-in">
+        <p class="exp-date">2024 – 2026</p>
+        <h3 class="exp-role">Bachelor in Mass Communication</h3>
+        <p class="exp-company">Han Chiang University College of Communication</p>
+        <p class="exp-desc">Media Production (Honors)</p>
+      </div>
+
+      <div class="exp-item fade-in">
+        <p class="exp-date">2022 – 2024</p>
+        <h3 class="exp-role">Diploma in Mass Communication</h3>
+        <p class="exp-company">Han Chiang University College of Communication</p>
+        <p class="exp-desc">Broadcasting Major</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <p class="section-label">Contact</p>
+    <h2 class="contact-title">Let's create<br><em>something together</em></h2>
+    <p class="contact-sub">Open for freelance projects, collaborations, and full-time opportunities.</p>
+    <div class="contact-links">
+      <a href="mailto:kethinwong@gmail.com" class="contact-link">kethinwong@gmail.com</a>
+      <a href="tel:01120142919" class="contact-link">011-20142919</a>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <span>© 2026 Alicia Wong Ke Thin</span>
+    <span>aliciawong.site</span>
+  </footer>
+
+  <script>
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+  </script>
+
+</body>
+</html>
