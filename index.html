@@ -28,6 +28,7 @@
       font-weight: 300;
       line-height: 1.7;
       font-size: 15px;
+      overflow-x: hidden; /* Prevents horizontal scroll bounce */
     }
 
     /* NAV */
@@ -39,9 +40,15 @@
       justify-content: space-between;
       align-items: center;
       padding: 1.4rem 5%;
-      background: rgba(255,255,255,0.92);
-      backdrop-filter: blur(8px);
+      background: rgba(255,255,255,0.85);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
       border-bottom: 1px solid var(--light);
+      transition: padding 0.3s ease;
+    }
+
+    nav.scrolled {
+      padding: 0.8rem 5%;
     }
 
     .nav-logo {
@@ -138,9 +145,12 @@
       width: 100%; height: 100%;
       object-fit: cover;
       display: block;
+      transform: scale(1.1);
+      transform-origin: center;
+      will-change: transform;
     }
 
-    .hero-image .placeholder-label {
+    .placeholder-label {
       position: absolute;
       inset: 0;
       display: flex;
@@ -152,18 +162,19 @@
       letter-spacing: 0.1em;
       text-transform: uppercase;
       gap: 0.5rem;
+      z-index: 0;
     }
 
-    .placeholder-icon { font-size: 2rem; opacity: 0.4; }
-
-    /* ABOUT */
-    #about {
-      background: var(--off-white);
+    /* WORK */
+    #work {
       padding: 8rem 5%;
-      display: grid;
-      grid-template-columns: 1fr 1.6fr;
-      gap: 6rem;
-      align-items: start;
+    }
+
+    .work-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-bottom: 4rem;
     }
 
     .section-label {
@@ -179,49 +190,6 @@
       font-size: clamp(2rem, 4vw, 3.2rem);
       font-weight: 300;
       line-height: 1.15;
-    }
-
-    .about-right p {
-      color: #5a5a58;
-      font-size: 0.95rem;
-      margin-bottom: 1.2rem;
-    }
-
-    .skills-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 1.5rem;
-      margin-top: 2.5rem;
-    }
-
-    .skill-item {
-      border-top: 1px solid var(--mid);
-      padding-top: 0.8rem;
-    }
-
-    .skill-name {
-      font-size: 0.8rem;
-      font-weight: 500;
-      letter-spacing: 0.05em;
-      margin-bottom: 0.3rem;
-    }
-
-    .skill-detail {
-      font-size: 0.78rem;
-      color: #7a7a78;
-      line-height: 1.6;
-    }
-
-    /* WORK */
-    #work {
-      padding: 8rem 5%;
-    }
-
-    .work-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-end;
-      margin-bottom: 4rem;
     }
 
     .work-grid {
@@ -255,23 +223,26 @@
       width: 100%; height: 100%;
       object-fit: cover;
       display: block;
-      transition: transform 0.5s ease;
+      transform: scale(1.1);
+      will-change: transform;
+      position: relative;
+      z-index: 1;
     }
 
-    .work-item:hover .work-thumb img { transform: scale(1.04); }
-
-    .work-thumb .placeholder-label {
+    .work-thumb::after {
+      content: '';
       position: absolute;
       inset: 0;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      color: var(--mid);
-      font-size: 0.75rem;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      gap: 0.5rem;
+      background: rgba(0,0,0,0.2);
+      opacity: 0;
+      transition: opacity 0.4s ease;
+      z-index: 2;
+    }
+
+    @media (hover: hover) {
+      .work-item:hover .work-thumb::after {
+        opacity: 1;
+      }
     }
 
     .work-caption {
@@ -290,6 +261,69 @@
       letter-spacing: 0.1em;
       text-transform: uppercase;
       margin-top: 0.2rem;
+    }
+
+    /* ABOUT */
+    #about {
+      background: var(--off-white);
+      padding: 8rem 5%;
+      display: grid;
+      grid-template-columns: 1fr 1.6fr;
+      gap: 6rem;
+      align-items: start;
+      overflow: hidden;
+    }
+
+    .about-right p {
+      color: #5a5a58;
+      font-size: 0.95rem;
+      margin-bottom: 1.2rem;
+    }
+
+    /* INFINITE MARQUEE LOGIC */
+    .skills-marquee-container {
+      margin-top: 4rem;
+      width: 100vw;
+      position: relative;
+      left: 50%;
+      right: 50%;
+      margin-left: -50vw;
+      margin-right: -50vw;
+      border-top: 1px solid var(--mid);
+      border-bottom: 1px solid var(--mid);
+      padding: 1.5rem 0;
+      overflow: hidden;
+      display: flex;
+      background: var(--white);
+    }
+
+    .skills-marquee {
+      display: flex;
+      white-space: nowrap;
+      animation: marquee 25s linear infinite;
+    }
+
+    .skills-marquee span {
+      font-family: var(--display);
+      font-size: 2rem;
+      font-style: italic;
+      color: var(--dark);
+      padding: 0 2rem;
+      display: inline-flex;
+      align-items: center;
+    }
+
+    .skills-marquee span::after {
+      content: '✦';
+      font-size: 1rem;
+      margin-left: 4rem;
+      color: var(--accent);
+      font-style: normal;
+    }
+
+    @keyframes marquee {
+      0% { transform: translate3d(0, 0, 0); }
+      100% { transform: translate3d(-50%, 0, 0); }
     }
 
     /* EXPERIENCE */
@@ -392,30 +426,49 @@
       letter-spacing: 0.08em;
     }
 
-    /* RESPONSIVE */
+    /* RESPONSIVE & MOBILE LOGIC */
     @media (max-width: 768px) {
-      #hero { grid-template-columns: 1fr; padding-top: 100px; gap: 2rem; }
+      #hero { grid-template-columns: 1fr; padding-top: 120px; gap: 2rem; }
       .hero-image { max-height: 60vw; aspect-ratio: 4/3; }
       #about, #experience { grid-template-columns: 1fr; gap: 3rem; }
-      .work-grid { grid-template-columns: 1fr; }
-      .work-item:first-child { grid-column: span 1; }
-      .skills-grid { grid-template-columns: 1fr; }
+      
+      .work-grid { 
+        display: flex; 
+        overflow-x: auto; 
+        scroll-snap-type: x mandatory;
+        padding-bottom: 2rem;
+        margin-right: -5%;
+        padding-right: 5%;
+        gap: 1rem;
+        -webkit-overflow-scrolling: touch;
+      }
+      
+      .work-grid::-webkit-scrollbar { display: none; }
+      .work-grid { -ms-overflow-style: none; scrollbar-width: none; }
+
+      .work-item { 
+        flex: 0 0 85vw;
+        scroll-snap-align: center;
+      }
+      
+      .work-item:first-child { grid-column: auto; }
+      .work-item:first-child .work-thumb { aspect-ratio: 4/3; }
+      
       .nav-links { display: none; }
     }
 
     /* FADE IN */
     .fade-in {
       opacity: 0;
-      transform: translateY(20px);
-      transition: opacity 0.7s ease, transform 0.7s ease;
+      transform: translateY(30px);
+      transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
     }
     .fade-in.visible { opacity: 1; transform: translateY(0); }
   </style>
 </head>
 <body>
 
-  <!-- NAV -->
-  <nav>
+  <nav id="navbar">
     <a class="nav-logo" href="#hero">Alicia Wong</a>
     <ul class="nav-links">
       <li><a href="#work">Work</a></li>
@@ -425,7 +478,6 @@
     </ul>
   </nav>
 
-  <!-- HERO -->
   <section id="hero">
     <div class="hero-text fade-in">
       <p class="hero-eyebrow">Photographer · Video Editor · Content Creator</p>
@@ -436,13 +488,11 @@
       <a href="#work" class="hero-cta">View Work</a>
     </div>
     <div class="hero-image fade-in">
-      <div class="placeholder-label">
-        <img src="assets/alicia.jpg" alt="Alicia Wong">
-      </div>
+      <div class="placeholder-label">Hero Image</div>
+      <img src="assets/alicia.jpg" alt="Alicia Wong" onerror="this.style.display='none'">
     </div>
   </section>
 
-  <!-- WORK -->
   <section id="work">
     <div class="work-header fade-in">
       <div>
@@ -452,13 +502,10 @@
     </div>
 
     <div class="work-grid">
-      <!-- Item 1 — Featured -->
       <div class="work-item fade-in">
         <div class="work-thumb">
-          <!-- <img src="assets/work1.jpg" alt="Wedding Film"> -->
-          <div class="placeholder-label">
-              <img src="assets/work1.jpg" alt="Wedding Film">
-          </div>
+          <div class="placeholder-label">Wedding Film</div>
+          <img src="assets/work1.jpg" alt="Wedding Film" onerror="this.style.display='none'">
         </div>
         <div class="work-caption">
           <p class="work-caption-title">Wedding Cinematic Film</p>
@@ -466,13 +513,10 @@
         </div>
       </div>
 
-      <!-- Item 2 -->
       <div class="work-item fade-in">
         <div class="work-thumb">
-          <!-- <img src="assets/work2.jpg" alt="Portrait Photography"> -->
-          <div class="placeholder-label">
-            <img src="assets/work2.jpg" alt="Portrait Photography">
-          </div>
+          <div class="placeholder-label">Portrait</div>
+          <img src="assets/work2.jpg" alt="Portrait Photography" onerror="this.style.display='none'">
         </div>
         <div class="work-caption">
           <p class="work-caption-title">Portrait Session</p>
@@ -480,13 +524,10 @@
         </div>
       </div>
 
-      <!-- Item 3 -->
       <div class="work-item fade-in">
         <div class="work-thumb">
-          <!-- <img src="assets/work3.jpg" alt="Corporate Event"> -->
-          <div class="placeholder-label">
-            <img src="assets/work3.jpg" alt="Corporate Event">
-          </div>
+          <div class="placeholder-label">Event</div>
+          <img src="assets/work3.jpg" alt="Corporate Event" onerror="this.style.display='none'">
         </div>
         <div class="work-caption">
           <p class="work-caption-title">Corporate Event Coverage</p>
@@ -494,13 +535,10 @@
         </div>
       </div>
 
-      <!-- Item 4 -->
       <div class="work-item fade-in">
         <div class="work-thumb">
-          <!-- <img src="assets/work4.jpg" alt="Food Photography"> -->
-          <div class="placeholder-label">
-            <img src="assets/work4.jpg" alt="Food Photography">
-          </div>
+          <div class="placeholder-label">Commercial</div>
+          <img src="assets/work4.jpg" alt="Food Photography" onerror="this.style.display='none'">
         </div>
         <div class="work-caption">
           <p class="work-caption-title">Food & Commercial</p>
@@ -508,13 +546,10 @@
         </div>
       </div>
 
-      <!-- Item 5 -->
       <div class="work-item fade-in">
         <div class="work-thumb">
-          <!-- <img src="assets/work5.jpg" alt="Social Media Campaign"> -->
-          <div class="placeholder-label">
-            <img src="assets/work5.jpg" alt="Social Media Campaign">
-          </div>
+          <div class="placeholder-label">Social</div>
+          <img src="assets/work5.jpg" alt="Social Media Campaign" onerror="this.style.display='none'">
         </div>
         <div class="work-caption">
           <p class="work-caption-title">Social Media Campaign</p>
@@ -524,7 +559,6 @@
     </div>
   </section>
 
-  <!-- ABOUT -->
   <section id="about">
     <div class="fade-in">
       <p class="section-label">About</p>
@@ -540,29 +574,24 @@
       <p>
         Fluent in Chinese, English, and Malay. Always curious, always shooting.
       </p>
-
-      <div class="skills-grid">
-        <div class="skill-item">
-          <p class="skill-name">Camera & Production</p>
-          <p class="skill-detail">DSLR/Mirrorless, Gimbal, Wedding & Event Videography</p>
-        </div>
-        <div class="skill-item">
-          <p class="skill-name">Video Editing</p>
-          <p class="skill-detail">Premiere Pro, DaVinci Resolve, Color Grading, Motion Graphics</p>
-        </div>
-        <div class="skill-item">
-          <p class="skill-name">Photography</p>
-          <p class="skill-detail">Portrait, Event, Food, Property, Lightroom & Photoshop</p>
-        </div>
-        <div class="skill-item">
-          <p class="skill-name">Design & Social</p>
-          <p class="skill-detail">Illustrator, After Effects, Canva, Content Planning</p>
-        </div>
-      </div>
     </div>
   </section>
 
-  <!-- EXPERIENCE -->
+  <div class="skills-marquee-container fade-in">
+    <div class="skills-marquee">
+      <span>Camera & Production</span>
+      <span>Video Editing</span>
+      <span>Photography</span>
+      <span>Color Grading</span>
+      <span>Design & Social</span>
+      <span>Camera & Production</span>
+      <span>Video Editing</span>
+      <span>Photography</span>
+      <span>Color Grading</span>
+      <span>Design & Social</span>
+    </div>
+  </div>
+
   <section id="experience">
     <div class="fade-in">
       <p class="section-label">Experience</p>
@@ -603,7 +632,6 @@
     </div>
   </section>
 
-  <!-- CONTACT -->
   <section id="contact">
     <p class="section-label">Contact</p>
     <h2 class="contact-title">Let's create<br><em>something together</em></h2>
@@ -614,7 +642,6 @@
     </div>
   </section>
 
-  <!-- FOOTER -->
   <footer>
     <span>© 2026 Alicia Wong Ke Thin</span>
     <span>aliciawong.site</span>
@@ -625,11 +652,42 @@
       entries.forEach(e => {
         if (e.isIntersecting) {
           e.target.classList.add('visible');
+          observer.unobserve(e.target);
         }
       });
-    }, { threshold: 0.1 });
+    }, { threshold: 0.1, rootMargin: "0px 0px -50px 0px" });
 
     document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 50) {
+        navbar.classList.add('scrolled');
+      } else {
+        navbar.classList.remove('scrolled');
+      }
+    });
+
+    const parallaxImages = document.querySelectorAll('.work-thumb img, .hero-image img');
+    let ticking = false;
+
+    function applyParallax() {
+      parallaxImages.forEach(img => {
+        const rect = img.parentElement.getBoundingClientRect();
+        if (rect.top < window.innerHeight && rect.bottom > 0) {
+          const yPos = (rect.top - window.innerHeight / 2) * 0.15;
+          img.style.transform = `translateY(${yPos}px) scale(1.1)`;
+        }
+      });
+      ticking = false;
+    }
+
+    window.addEventListener('scroll', () => {
+      if (!ticking) {
+        window.requestAnimationFrame(applyParallax);
+        ticking = true;
+      }
+    });
   </script>
 
 </body>
